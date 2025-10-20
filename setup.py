@@ -11,7 +11,8 @@ def version():
     with open('untokenize.py') as input_file:
         for line in input_file:
             if line.startswith('__version__'):
-                return ast.parse(line).body[0].value.s
+                node = ast.parse(line).body[0].value
+                return getattr(node, 's', None) if hasattr(node, 's') else node.value
 
 
 with open('README.rst') as readme:
